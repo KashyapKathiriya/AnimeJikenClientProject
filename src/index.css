@@ -1,7 +1,5 @@
 :root {
-  font-family: Garamond;
-  line-height: 1.5;
-  font-weight: 400;
+  font-family: Garamond !important;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -22,8 +20,16 @@ body {
   display: flex;
   min-width: 320px;
   min-height: 100vh;
+  /* font-family: -apple-system-ui-serif, ui-serif, "Spectral", "Georgia", serif; */
+  font-family: Roboto;
   /* color: rgba(255, 255, 255, 0.841) !important;
   background-color: rgb(24, 22, 22) !important; */
+}
+
+table {
+  /* color: rgba(255, 255, 255, 0.841) !important;
+  background-color: rgb(24, 22, 22) !important; */
+  box-shadow: 0 0 2px 2px rgb(205, 201, 201);
 }
 
 h1 {
@@ -40,4 +46,20 @@ h1 {
 
 #root {
   width: 100vw;
+}
+
+.title-cell .flex-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: 100%;
+}
+
+.table-body-row> td {
+  vertical-align: middle;
+  height: 70px;
+}
+
+.table-body-row {
+  height: 70px;
 }
