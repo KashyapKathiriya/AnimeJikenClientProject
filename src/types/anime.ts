@@ -18,6 +18,7 @@ export interface Anime {
     rating: string; // PG-13, R, etc.
     genres: Genre[];
     rank: number | null;
+    members: number;
     // studios: Studio[];
     trailer?: { youtube_id: string; };
 }
