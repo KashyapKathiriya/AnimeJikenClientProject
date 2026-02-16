@@ -3,9 +3,10 @@ import { useRef } from "react";
 interface HeaderProps {
   onSearch: (query: string) => void;
   onOrderChange: (order: string) => void;
+  onSortChange: (sort: string) => void;
 }
 
-export function Header({ onSearch, onOrderChange }: HeaderProps) {
+export function Header({ onSearch, onOrderChange, onSortChange }: HeaderProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSearch = (e: React.SyntheticEvent) => {
@@ -28,6 +29,15 @@ export function Header({ onSearch, onOrderChange }: HeaderProps) {
         <option value="score">Highest Score</option>
         <option value="rank">Best Rank</option>
         <option value="popularity">Popularity</option>
+      </select>
+
+      <select
+        className="form-select"
+        style={{ width: "150px" }}
+        onChange={(e) => onSortChange(e.target.value)}
+      >
+        <option value="desc">Descending</option>
+        <option value="asc">Ascending</option>
       </select>
 
       <form className="d-flex" role="search" onSubmit={handleSearch}>

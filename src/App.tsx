@@ -11,20 +11,27 @@ function App() {
 
   const [currentQuery, setCurrentQuery] = useState("");
   const [orderCriteria, setOrderCriteria] = useState("members");
-  const [sortOrder, setSortOrder] = useState("desc")
+  const [sortOrder, setSortOrder] = useState("desc");
 
-  const fetchData = async (query?: string, sort?: string,) => {
+  const fetchData = async (
+    query = currentQuery,
+    order = orderCriteria,
+    sort = sortOrder,
+  ) => {
     try {
       let result;
       if (query && query.trim().length > 0) {
-        result = await animeService.searchAnime(query, sort);
-        console.log("seacrh query: " + query + "sortby: " + sort);
-        console.log(result.data);
+        result = await animeService.searchAnime(query, order, sort);
+        console.log(
+          "seacrh query: " + query + "  orderby: " + order,
+          "  sort: " + sort,
+        );
       } else {
         result = await animeService.getTopAnime();
-        console.log(result.data);
       }
-      setAnimeList(result.data || []);
+      const validAnime = (result.data || []).filter((anime: Anime) => anime.rank != null);
+      console.log(validAnime)
+      setAnimeList(validAnime);
     } catch (error) {
       console.error("Error fetching the anime list: " + error);
     } finally {
@@ -38,18 +45,29 @@ function App() {
 
   const handleSearch = (query: string) => {
     setCurrentQuery(query);
-    fetchData(query, orderCriteria);
+    fetchData(query, orderCriteria, sortOrder);
   };
 
-  const handleOrderChange = (newSort: string) => {
-    setOrderCriteria(newSort);
+  const handleOrderChange = (newOrder: string) => {
+    setOrderCriteria(newOrder);
+    if (newOrder) {
+      fetchData(currentQuery, newOrder, sortOrder);
+    }
+  };
+
+  const handleSortChange = (newSort: string) => {
+    setSortOrder(newSort);
     if (newSort) {
-      fetchData(currentQuery, newSort);
+      fetchData(currentQuery, orderCriteria, newSort);
     }
   };
   return (
     <>
-      <Header onSearch={handleSearch} onOrderChange={handleOrderChange} />
+      <Header
+        onSearch={handleSearch}
+        onOrderChange={handleOrderChange}
+        onSortChange={handleSortChange}
+      />
       <HomePage animeList={animeList} loading={Loading} />
     </>
   );
